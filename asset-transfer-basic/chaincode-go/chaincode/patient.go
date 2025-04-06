@@ -14,9 +14,11 @@ type PatientRecord struct {
 	ID          string `json:"id"`
 	UserID      string `json:"userId"`
 	DocID       string `json:"docId"`
-	SlotDate    string `json:"slotDate"`
 	UserData    string `json:"userData"`
 	DocData     string `json:"docData"`
+	Amount      string `json:"amount"`
+    SlotTime    string `json:"slotTime"`
+    SlotDate    string `json:"slotDate"`
 	Date        string `json:"date"`
 	Cancelled   bool   `json:"cancelled"`
 	Payment     bool   `json:"payment"`
@@ -27,34 +29,35 @@ type PatientRecord struct {
 
 func (s *SmartContract) InitLedger(ctx contractapi.TransactionContextInterface) error {
 	assets := []PatientRecord{
-		{ID: "2", UserID: "U123", DocID: "D456", SlotDate: "2025-04-06T10:00:00Z", UserData: "John Doe", DocData: "Dr. Smith", Date: "2025-04-06", Cancelled: false, Payment: true, IsCompleted: false, Action: "Booked", Timestamp: "2025-04-01T09:15:00Z"},
-		{ID: "3", UserID: "U789", DocID: "D321", SlotDate: "2025-04-08T14:30:00Z", UserData: "Jane Roe", DocData: "Dr. Adams", Date: "2025-04-08", Cancelled: false, Payment: true, IsCompleted: true, Action: "Completed", Timestamp: "2025-04-02T11:25:00Z"},
-		{ID: "4", UserID: "U111", DocID: "D654", SlotDate: "2025-04-10T09:00:00Z", UserData: "Mike Black", DocData: "Dr. Lin", Date: "2025-04-10", Cancelled: true, Payment: false, IsCompleted: false, Action: "Cancelled", Timestamp: "2025-04-03T08:50:00Z"},
-		{ID: "5", UserID: "U222", DocID: "D987", SlotDate: "2025-04-07T13:00:00Z", UserData: "Anna White", DocData: "Dr. Green", Date: "2025-04-07", Cancelled: false, Payment: true, IsCompleted: true, Action: "Completed", Timestamp: "2025-04-02T14:20:00Z"},
-		{ID: "6", UserID: "U333", DocID: "D147", SlotDate: "2025-04-09T16:00:00Z", UserData: "Chris Blue", DocData: "Dr. Young", Date: "2025-04-09", Cancelled: false, Payment: false, IsCompleted: false, Action: "Pending", Timestamp: "2025-04-04T10:10:00Z"},
-		{ID: "7", UserID: "U444", DocID: "D258", SlotDate: "2025-04-11T11:00:00Z", UserData: "Laura Grey", DocData: "Dr. Brown", Date: "2025-04-11", Cancelled: true, Payment: true, IsCompleted: false, Action: "Cancelled", Timestamp: "2025-04-05T12:30:00Z"},
-		{ID: "8", UserID: "U555", DocID: "D369", SlotDate: "2025-04-06T15:00:00Z", UserData: "David Gold", DocData: "Dr. King", Date: "2025-04-06", Cancelled: false, Payment: true, IsCompleted: true, Action: "Completed", Timestamp: "2025-04-01T13:45:00Z"},
-		{ID: "9", UserID: "U666", DocID: "D741", SlotDate: "2025-04-07T10:30:00Z", UserData: "Emily Rose", DocData: "Dr. Carter", Date: "2025-04-07", Cancelled: false, Payment: true, IsCompleted: false, Action: "Booked", Timestamp: "2025-04-03T15:00:00Z"},
-		{ID: "10", UserID: "U777", DocID: "D852", SlotDate: "2025-04-08T12:00:00Z", UserData: "Steve Cyan", DocData: "Dr. Lopez", Date: "2025-04-08", Cancelled: false, Payment: false, IsCompleted: false, Action: "Pending", Timestamp: "2025-04-02T17:20:00Z"},
-		{ID: "11", UserID: "U888", DocID: "D963", SlotDate: "2025-04-12T09:30:00Z", UserData: "Rachel Amber", DocData: "Dr. Patel", Date: "2025-04-12", Cancelled: false, Payment: true, IsCompleted: true, Action: "Completed", Timestamp: "2025-04-04T18:45:00Z"},
+		{ID: "3", UserID: "U234", DocID: "D567", SlotDate: "2025-04-07T09:00:00Z", UserData: "Alice Walker", DocData: "Dr. Kim", Amount: "20", Date: "2025-04-07", Cancelled: false, Payment: true, IsCompleted: true, Action: "Completed", Timestamp: "2025-04-02T08:00:00Z"},
+		{ID: "4", UserID: "U345", DocID: "D678", SlotDate: "2025-04-08T11:30:00Z", UserData: "Bob Stone", DocData: "Dr. Lee", Amount: "15", Date: "2025-04-08", Cancelled: false, Payment: false, IsCompleted: false, Action: "Pending", Timestamp: "2025-04-03T10:10:00Z"},
+		{ID: "5", UserID: "U456", DocID: "D789", SlotDate: "2025-04-09T14:00:00Z", UserData: "Carol Swift", DocData: "Dr. Chen", Amount: "18", Date: "2025-04-09", Cancelled: true, Payment: false, IsCompleted: false, Action: "Cancelled", Timestamp: "2025-04-04T12:20:00Z"},
+		{ID: "6", UserID: "U567", DocID: "D890", SlotDate: "2025-04-10T10:45:00Z", UserData: "Dan Grey", DocData: "Dr. Kumar", Amount: "22", Date: "2025-04-10", Cancelled: false, Payment: true, IsCompleted: false, Action: "Booked", Timestamp: "2025-04-05T11:15:00Z"},
+		{ID: "7", UserID: "U678", DocID: "D901", SlotDate: "2025-04-11T16:00:00Z", UserData: "Ella Frost", DocData: "Dr. Ali", Amount: "25", Date: "2025-04-11", Cancelled: false, Payment: true, IsCompleted: true, Action: "Completed", Timestamp: "2025-04-06T09:45:00Z"},
+		{ID: "8", UserID: "U789", DocID: "D012", SlotDate: "2025-04-12T13:15:00Z", UserData: "Frank Ocean", DocData: "Dr. Patel", Amount: "19", Date: "2025-04-12", Cancelled: false, Payment: false, IsCompleted: false, Action: "Pending", Timestamp: "2025-04-07T14:30:00Z"},
+		{ID: "9", UserID: "U890", DocID: "D123", SlotDate: "2025-04-13T08:30:00Z", UserData: "Grace Bell", DocData: "Dr. Moore", Amount: "16", Date: "2025-04-13", Cancelled: true, Payment: false, IsCompleted: false, Action: "Cancelled", Timestamp: "2025-04-08T07:20:00Z"},
+		{ID: "10", UserID: "U901", DocID: "D234", SlotDate: "2025-04-14T15:00:00Z", UserData: "Henry Blaze", DocData: "Dr. Green", Amount: "23", Date: "2025-04-14", Cancelled: false, Payment: true, IsCompleted: true, Action: "Completed", Timestamp: "2025-04-09T13:50:00Z"},
+		{ID: "11", UserID: "U012", DocID: "D345", SlotDate: "2025-04-15T12:30:00Z", UserData: "Isla Ray", DocData: "Dr. White", Amount: "21", Date: "2025-04-15", Cancelled: false, Payment: true, IsCompleted: false, Action: "Booked", Timestamp: "2025-04-10T12:00:00Z"},
+		{ID: "12", UserID: "U123", DocID: "D456", SlotDate: "2025-04-16T09:15:00Z", UserData: "Jack Noir", DocData: "Dr. Black", Amount: "17", Date: "2025-04-16", Cancelled: true, Payment: false, IsCompleted: false, Action: "Cancelled", Timestamp: "2025-04-11T08:30:00Z"},
 	}
 
 	for _, asset := range assets {
-		s.CreateRecord(ctx, asset.ID, asset.UserID, asset.DocID, asset.SlotDate, asset.UserData, asset.DocData, asset.Date,
-            asset.Cancelled, asset.Payment, asset.IsCompleted, asset.Action, asset.Timestamp)
+		s.CreateRecord(ctx, asset.ID, asset.UserID, asset.DocID, asset.SlotDate, asset.SlotTime, asset.UserData, asset.DocData,
+			asset.Amount, asset.Date,
+			asset.Cancelled, asset.Payment, asset.IsCompleted, asset.Action)
 	}
 
 	return nil
 }
 
 func (s *SmartContract) CreateRecord(ctx contractapi.TransactionContextInterface,
-	id, userID, docId, slotDate, userData, docData, date string,
-    cancelled, payment, isCompleted bool,
-    action, timeStamp string,
+	id, userID, docId, slotDate, slotTime, userData, docData, amount, date string,
+	cancelled, payment, isCompleted bool,
+	action string,
 ) error {
 	record := PatientRecord{
-		ID: id, UserID: userID, DocID: docId, SlotDate: slotDate, UserData: userData, DocData: docData, Date: date,
-        Cancelled: cancelled, Payment: payment, IsCompleted: isCompleted,
+		ID: id, UserID: userID, DocID: docId, SlotTime: slotTime, SlotDate: slotDate, UserData: userData, DocData: docData, Amount: amount, Date: date,
+		Cancelled: cancelled, Payment: payment, IsCompleted: isCompleted,
 		Action: action, Timestamp: time.Now().Format(time.RFC3339),
 	}
 	data, _ := json.Marshal(record)
