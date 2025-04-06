@@ -17,8 +17,8 @@ type PatientRecord struct {
 	UserData    string `json:"userData"`
 	DocData     string `json:"docData"`
 	Amount      string `json:"amount"`
-    SlotTime    string `json:"slotTime"`
-    SlotDate    string `json:"slotDate"`
+	SlotTime    string `json:"slotTime"`
+	SlotDate    string `json:"slotDate"`
 	Date        string `json:"date"`
 	Cancelled   bool   `json:"cancelled"`
 	Payment     bool   `json:"payment"`
